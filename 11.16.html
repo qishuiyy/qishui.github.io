@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>转发给兄弟萌看看</title>
+  <link href="https://web.sdk.qcloud.com/player/tcplayer/release/v4.2.1/tcplayer.min.css" rel="stylesheet" />
+  <script src="https://web.sdk.qcloud.com/player/tcplayer/release/v4.2.1/libs/hls.min.0.13.2m.js"></script>
+  <script src="https://web.sdk.qcloud.com/player/tcplayer/release/v4.5.0/tcplayer.v4.5.0.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #e0f7ff, #ffffff);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #111;
+      margin-bottom: 30px;
+    }
+
+    .video-block {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 30px;
+    }
+
+    .video-title {
+      display: block;
+      background: #0094ff;
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-align: left; /* 修改为靠左对齐 */
+    }
+
+    .video-title:hover {
+      background: #0079cc;
+    }
+
+    .tcplayer-container {
+      display: none;
+      width: 100%;
+      height: 580px;
+      max-width: 1080px;
+      margin: 20px auto;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .jump-btn {
+      display: none;
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .jump-btn:hover {
+      background-color: #e85c00;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍉合集</h1>
+  <div id="content">加载中...</div>
+
+  <script>
+    const players = [];
+    let currentPlayingIndex = null;
+
+    function getLocalData() {
+      return {
+        data_mp4: [
+          { title: "吃🍉这是干嘛呢？兄弟也不能这样玩啊！", url: "http://aod.cos.tx.xmcdn.com/storages/7612-audiofreehighqps/63/28/GAqhVp8M7ff3ACAAAAQ2OdOE.mp4" },
+          { title: "东北酒懵子帮朋友出头，差点把自己朋友砍死…哥自己人自己人", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763279786909058423.mp4" },
+           { title: "卧龙凤雏，一个超速，一个双黄线掉头，双向奔赴了属于是", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763280476989094983.mp4" },
+          { title: "印度火葬现场 坟头蹦迪", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763280476989094983.mp4" },
+          { title: "精神小伙 抓奸，反被精神小妹拿剪刀威胁", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763281742896043203.mp4" },
+          { title: "美国白皮小哥，因为在麦当劳蹲了一个小时厕所，被警察暴力打死", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763280070009002973.mp4" },
+          { title: "又是羡慕黄毛的一天，偷吃禁果，一个吃香蕉，一个吃鲍鱼", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763280210691081478.mp4" },
+          { title: "这两人够猛的，肉体硬扛刀子！", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763279431665029167.mp4" },
+          { title: "非洲街头小吃，烤老鼠串，有群友喜欢吗，我带两串回来", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763279616640030337.mp4" },
+          { title: "混的姐打小弟弟", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763279616640030337.mp4" },
+           { title: "死亡翻滚", url: "http://aod.cos.tx.xmcdn.com/storages/7612-audiofreehighqps/63/28/GAqhVp8M7ff3ACAAAAQ2OdOE.mp4" },
+          { title: "吃🍉精神小伙从不缺同生共死的女友！", url: "http://aod.cos.tx.xmcdn.com/storages/98bf-audiofreehighqps/FA/83/GKwRIDoM7fkaABSKtgQ2OjGu.mp4" },
+          { title: "吃🍉药效还没过就在马路上发骚.", url: "http://aod.cos.tx.xmcdn.com/storages/7870-audiofreehighqps/EB/CF/GAqhqKwM7fnRABuhBwQ2OnEO.mp4" },
+          { title: "吃🍉买这么多避孕套是干嘛用？ ", url: "http://aod.cos.tx.xmcdn.com/storages/93c0-audiofreehighqps/34/D3/GKwRIRwM7foCAB61HgQ2OoVt.mp4" },
+          { title: "吃🍉努力上进的小姐姐.", url: "http://aod.cos.tx.xmcdn.com/storages/9eda-audiofreehighqps/27/0E/GKwRIaIM7fp-AB6g5AQ2OrHM.mp4" },
+          { title: "吃🍉简单吃点 — 风味汉堡 ", url: "http://aod.cos.tx.xmcdn.com/storages/b60d-audiofreehighqps/9F/9C/GAqhfZkM7frBAA2EkAQ2Osrz.mp4" },
+          { title: "吃🍉羊癫疯犯了，上网挂逼了", url: "http://aod.cos.tx.xmcdn.com/storages/e1a5-audiofreehighqps/7F/C7/GKwRIDoM7fuhACAAAAQ2OxfB.mp4" },
+          { title: "吃🍉什么活动 ？", url: "http://aod.cos.tx.xmcdn.com/storages/1a19-audiofreehighqps/BC/8C/GAqhg3wM7fvvAAn8eQQ2OzIs.mp4" },
+          { title: "吃🍉莎莎舞，老头们在舞池肉林中醉生梦死", url: "http://aod.cos.tx.xmcdn.com/storages/c748-audiofreehighqps/5E/15/GKwRIJEM7fyCACAAAAQ2O2K_.mp4" },
+          { title: "吃🍉你毛呢？屁股毛呢", url: "http://aod.cos.tx.xmcdn.com/storages/2bc5-audiofreehighqps/1D/A0/GKwRIJEM7fzWABzjWwQ2O37D.mp4" },
+          { title: "ASMR#酥酥学姐照顾发烧的小宝儿 姐姐会一直陪着你的", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763282435238037572.mp4" },
+        ],
+        btn_text: '加入吃瓜微信群',
+        btn_link: 'https://mp.weixin.qq.com/s/EwMupnObyvf00M7Q81jUww',
+        title: '转发＝更新的动力'
+      };
+    }
+
+    async function loadVideos() {
+      const data = getLocalData();
+      document.title = data.title;
+
+      const container = document.getElementById('content');
+      container.innerHTML = '';
+
+      data.data_mp4.forEach((item, index) => {
+        const videoId = "tcplayer-container-" + index;
+        const block = document.createElement('div');
+        block.className = 'video-block';
+        block.innerHTML = `
+          <span class="video-title" data-index="${index}">${index + 1}. ${item.title}</span>
+          <video id="${videoId}" class="tcplayer-container" preload="auto" playsinline webkit-playsinline></video>
+          <button class="jump-btn">${data.btn_text}</button>
+        `;
+        container.appendChild(block);
+
+        const jumpBtn = block.querySelector('.jump-btn');
+        jumpBtn.onclick = () => window.location.href = data.btn_link;
+
+        setTimeout(() => {
+          const player = TCPlayer(videoId, { reportable: false });
+          player.src(item.url);
+          player.pause();
+          players[index] = player;
+        }, 0);
+      });
+
+      document.querySelectorAll('.video-title').forEach(titleElem => {
+        titleElem.addEventListener('click', function () {
+          const index = parseInt(this.getAttribute('data-index'));
+          if (currentPlayingIndex === index) return;
+
+          if (currentPlayingIndex !== null) {
+            const prevVideoElem = document.getElementById("tcplayer-container-" + currentPlayingIndex);
+            if (prevVideoElem) prevVideoElem.style.display = 'none';
+            const prevBlock = prevVideoElem?.parentElement;
+            prevBlock?.querySelector('.jump-btn')?.style.setProperty('display', 'none');
+            players[currentPlayingIndex]?.pause();
+          }
+
+          const currentVideoElem = document.getElementById("tcplayer-container-" + index);
+          currentVideoElem.style.display = 'block';
+          const currentBlock = this.parentElement;
+          currentBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          currentBlock.querySelector('.jump-btn').style.display = 'block';
+          players[index]?.play();
+          currentPlayingIndex = index;
+        });
+      });
+    }
+
+    loadVideos();
+  </script>
+</body>
+</html>
