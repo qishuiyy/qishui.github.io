@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>转发给兄弟萌看看</title>
+  <link href="https://web.sdk.qcloud.com/player/tcplayer/release/v4.2.1/tcplayer.min.css" rel="stylesheet" />
+  <script src="https://web.sdk.qcloud.com/player/tcplayer/release/v4.2.1/libs/hls.min.0.13.2m.js"></script>
+  <script src="https://web.sdk.qcloud.com/player/tcplayer/release/v4.5.0/tcplayer.v4.5.0.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #e0f7ff, #ffffff);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #111;
+      margin-bottom: 30px;
+    }
+
+    .video-block {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 30px;
+    }
+
+    .video-title {
+      display: block;
+      background: #0094ff;
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-align: left; /* 修改为靠左对齐 */
+    }
+
+    .video-title:hover {
+      background: #0079cc;
+    }
+
+    .tcplayer-container {
+      display: none;
+      width: 100%;
+      height: 580px;
+      max-width: 1080px;
+      margin: 20px auto;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .jump-btn {
+      display: none;
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .jump-btn:hover {
+      background-color: #e85c00;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍉合集</h1>
+  <div id="content">加载中...</div>
+
+  <script>
+    const players = [];
+    let currentPlayingIndex = null;
+
+    function getLocalData() {
+      return {
+        data_mp4: [
+          { title: "南宁 地铁 黄毛在车厢里当众 打飞机", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763305200164022234.mp4" },
+          { title: "人才阿三问老外能不能做i，还把鸟掏出来", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763305558085042439.mp4" },
+           { title: "主人的任务？", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763305959677086714.mp4" },
+          { title: "带着妹妹飙车装逼，这下开心了", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763306415229015769.mp4" },
+          { title: "可惜我没有100w，当不成大哥", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763307103613026427.mp4" },
+          { title: "男子穿着假皮套，男扮女装跑女厕偷窥被抓", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763307208642048519.mp4" },
+          { title: "精神小伙 飙车日常", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763307208642048519.mp4" },
+          { title: "广西 北海一孩子从楼上掉下来。", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763307663533032003.mp4" },
+          { title: "对家庭暴力说不", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763307876254094316.mp4" },
+          { title: "给旁边的胖子急坏了，直接上手了，性压抑很严重啊", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763308033233079664.mp4" },
+           { title: "鞋都创掉了👀，开头给大家放个美美得特写", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763308353387060524.mp4" },
+          { title: "鬼火小子，男的没事，女的凶多吉少", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-16/1763308557891028815.mp4" },
+          { title: "女士摔跤确实比男摔跤有看头.", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-17/1763309017347005201.mp4" },
+          { title: "这女的在干嘛..服务员也不敲门打扰人家干事了 ", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-17/1763309133265032073.mp4" },
+          { title: "街头撕小三，头发都掉了", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-17/1763309546973080704.mp4" },
+          { title: "ASMR#小猫烤烤 1m8的烤猫猫  👅棉花糖手指➕按摩油", url: "https://mcoss.gz-cmc.cn/cos/video/a048c4068b0a408abd401ef026e7087c/UGC/6736b5ebe4b0cd487e130027/2025-11-17/1763310493586089150.mp4" },
+        ],
+        btn_text: '加入吃瓜微信群',
+        btn_link: 'https://mp.weixin.qq.com/s/EwMupnObyvf00M7Q81jUww',
+        title: '转发＝更新的动力'
+      };
+    }
+
+    async function loadVideos() {
+      const data = getLocalData();
+      document.title = data.title;
+
+      const container = document.getElementById('content');
+      container.innerHTML = '';
+
+      data.data_mp4.forEach((item, index) => {
+        const videoId = "tcplayer-container-" + index;
+        const block = document.createElement('div');
+        block.className = 'video-block';
+        block.innerHTML = `
+          <span class="video-title" data-index="${index}">${index + 1}. ${item.title}</span>
+          <video id="${videoId}" class="tcplayer-container" preload="auto" playsinline webkit-playsinline></video>
+          <button class="jump-btn">${data.btn_text}</button>
+        `;
+        container.appendChild(block);
+
+        const jumpBtn = block.querySelector('.jump-btn');
+        jumpBtn.onclick = () => window.location.href = data.btn_link;
+
+        setTimeout(() => {
+          const player = TCPlayer(videoId, { reportable: false });
+          player.src(item.url);
+          player.pause();
+          players[index] = player;
+        }, 0);
+      });
+
+      document.querySelectorAll('.video-title').forEach(titleElem => {
+        titleElem.addEventListener('click', function () {
+          const index = parseInt(this.getAttribute('data-index'));
+          if (currentPlayingIndex === index) return;
+
+          if (currentPlayingIndex !== null) {
+            const prevVideoElem = document.getElementById("tcplayer-container-" + currentPlayingIndex);
+            if (prevVideoElem) prevVideoElem.style.display = 'none';
+            const prevBlock = prevVideoElem?.parentElement;
+            prevBlock?.querySelector('.jump-btn')?.style.setProperty('display', 'none');
+            players[currentPlayingIndex]?.pause();
+          }
+
+          const currentVideoElem = document.getElementById("tcplayer-container-" + index);
+          currentVideoElem.style.display = 'block';
+          const currentBlock = this.parentElement;
+          currentBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          currentBlock.querySelector('.jump-btn').style.display = 'block';
+          players[index]?.play();
+          currentPlayingIndex = index;
+        });
+      });
+    }
+
+    loadVideos();
+  </script>
+</body>
+</html>
