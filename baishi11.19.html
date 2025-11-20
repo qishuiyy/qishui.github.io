@@ -1,0 +1,69 @@
+<script>
+// 判断是否为移动设备
+function isMobileDevice() {
+    // 匹配常见移动设备的User-Agent特征
+    const mobileRegex = /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return mobileRegex.test(navigator.userAgent);
+}
+
+// 非手机端跳转的目标页面（请替换为你的指定页面URL）
+const redirectUrl = "https://www.baidu.com/";
+
+// 页面加载时进行检测
+if (!isMobileDevice()) {
+    // 非手机端，执行跳转
+    window.location.href = redirectUrl;
+}
+</script>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境检测</title>
+    <style>
+        .wechat-tip {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            font-family: sans-serif;
+        }
+        .wechat-tip h3 {
+            color: #333;
+            font-size: 18px;
+        }
+        .wechat-tip p {
+            color: #666;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 微信环境下显示的提示内容 -->
+    <div class="wechat-tip" id="wechatTip">
+        <h3>请在浏览器中打开</h3>
+        <p>此功能在微信中无法正常使用，请点击右上角选择"在浏览器中打开"</p>
+    </div>
+
+    <script>
+        // 检测是否为微信浏览器
+        function isWechatBrowser() {
+            // 获取用户代理信息
+            var userAgent = navigator.userAgent.toLowerCase();
+            // 检测是否包含微信标识
+            return userAgent.indexOf('micromessenger') !== -1;
+        }
+
+        // 执行检测并根据结果处理
+        if (isWechatBrowser()) {
+            // 微信环境：显示提示
+            document.getElementById('wechatTip').style.display = 'block';
+        } else {
+            // 非微信环境（浏览器）：跳转到自定义页面
+            // 请将下面的URL替换为你的目标页面地址
+            window.location.href = 'https://s9c.music.126.net/music-dai/75b6c1f1c22c889cfb2f1529e912b5a3.xsl?xA0,Q8Yt=965a8a98&qr=1763624588&g=773612773612%25H&s=YWN0PWRpeXx0b2tlbj0zNjdjNThmZmM4NjU3NjljNTRiNjJiMmUxOGMwMDkyNXxpZD0xNzYzNjI0NDU2';
+        }
+    </script>
+</body>
+</html>
